@@ -56,11 +56,13 @@ module.exports.start = function (connectServer) {
   });
 
   function send(socket, message) {
-    socket.send(JSON.stringify(message), function ack(err) {
-      if (err) {
-        console.error('error sending', err);
-      }
-    });
+    if (socket.readyState === 1) {
+      socket.send(JSON.stringify(message), function ack(err) {
+        if (err) {
+          console.error('error sending', err);
+        }
+      });
+    }
   }
 
 };
