@@ -1,6 +1,8 @@
 {
   "name": "work-queues-client",
   "version": "0.1.0",
+  "author": "David Martines",
+  "license": "UNLICENSED",
   "private": true,
   "dependencies": {
     "react": "^15.6.1",

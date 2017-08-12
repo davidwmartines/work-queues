@@ -1,6 +1,6 @@
 {
   "name": "work-queues",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Mulit-user work-queue web app.",
   "main": "index.js",
   "scripts": {
@@ -12,6 +12,7 @@
   },
   "author": "David Martines",
   "license": "UNLICENSED",
+  "private": true,
   "bugs": {
     "url": "https://github.com/d5172/work-queues/issues"
   },

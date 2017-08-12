@@ -1,7 +1,10 @@
 {
   "name": "work-queues-server",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "work queues app server",
+  "author": "David Martines",
+  "license": "UNLICENSED",
+  "private": true,
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
