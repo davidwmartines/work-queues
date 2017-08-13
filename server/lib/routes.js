@@ -11,7 +11,7 @@ module.exports = function (app) {
     });
 
   app.use('/api/tokens', require('./api/tokens'));
-  // app.use('/api/socket-keys', require('./api/socket-keys'));
+  app.use('/api/socket-keys', require('./api/socket-keys'));
   // app.use('/api/items', require('./api/items'));
   // app.use('/api/assignments', require('./api/assignments'));
 

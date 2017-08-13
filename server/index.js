@@ -26,7 +26,7 @@ function registerSocketWorkers() {
     setInterval(() => {
       context.send({
         event: 'heartbeat',
-        info: new Date()
+        message: new Date()
       });
     }, 3000);
   });

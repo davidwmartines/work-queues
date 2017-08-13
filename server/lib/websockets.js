@@ -29,7 +29,7 @@ module.exports.start = function (connectServer) {
         return;
       }
 
-      console.log('connected user id', token.user);
+      console.log('connected user', token.user);
 
       const socketContext = {
         socket: socket,
@@ -88,17 +88,6 @@ module.exports.issueKey = function (authToken) {
 };
 
 function getValidTokenFromKey(key) {
-
-  //for testing
-  if (!key) {
-    return Promise.resolve({
-      user: {
-        id: 0,
-        name: 'test'
-      }
-    });
-  }
-
   const storageKey = keyspace + key;
   return redisClient.getAsync(storageKey).then(res => {
     if (res) {

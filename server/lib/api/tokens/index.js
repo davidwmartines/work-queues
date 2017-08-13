@@ -8,7 +8,7 @@ const config = require('../../../config/environment');
 
 
 //mock some latency for demo purposes.
-const latencyMs = 1000;
+const latencyMs = 300;
 
 const router = express.Router();
 
