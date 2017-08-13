@@ -1,30 +1,12 @@
-import React, {Component} from 'react';
-import AuthService from './auth-service';
-import SignOut from './SignOut';
+import React from 'react';
 
-class UserInfo extends Component {
-
-  shouldRender(){
-    const state = AuthService.getAuthenticationState();
-    return state.authenticated;
-  }
-
-  onAuthenticationChanged(e){
-    if (this.props.onAuthenticationChanged) {
-      this.props.onAuthenticationChanged(e);
-    }
-  }
-
-  render(){
-    if(!this.shouldRender()){
-      return null;
-    }
-    return (
-      <SignOut
-        onAuthenticationChanged={(event) => this.onAuthenticationChanged(event)}
-      />
-    );
-  }
+function UserInfo(props){
+  console.log('userinfo', props);
+  return (
+    <div>
+      <span> Logged in as {props.user.name} </span>
+    </div>
+  );
 }
 
 export default UserInfo;

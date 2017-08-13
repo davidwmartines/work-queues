@@ -1,7 +1,7 @@
 import React, { Component }  from 'react';
 import './App.css';
 import AuthContainer from './authn/AuthContainer';
-import UserInfo from './authn/UserInfo';
+import UserInfoContainer from './authn/UserInfoContainer';
 
 class App extends Component {
 
@@ -28,7 +28,7 @@ class App extends Component {
         <div className="App-header">
           <h2>Work Queues</h2>
         </div>
-        <UserInfo
+        <UserInfoContainer
           onAuthenticationChanged={(event) => this.onAuthenticationChanged(event)}
         />
         <AuthContainer
