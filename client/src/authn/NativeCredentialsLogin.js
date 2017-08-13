@@ -6,14 +6,41 @@ class NativeCredentialsLogin extends Component{
   constructor(props){
     super(props);
     this.state = {
+      submitting: false,
+      message: '',
       username:'',
       password:''
     };
   }
 
-  onSubmit(e){
+  onSubmit(e) {
     e.preventDefault();
-    AuthService.loginNative(this.state.username, this.state.password);
+    this.setState({
+      submitting: true,
+      message: ''
+    });
+    AuthService.loginNative(this.state.username, this.state.password)
+      .then((result) => {
+        this.setState({
+          submitting: false
+        });
+        if (result) {
+          this.setState({
+            username: '',
+            password: '',
+            message: ''
+          });
+          if (this.props.onAuthenticationChanged) {
+            this.props.onAuthenticationChanged({
+              authenticated: true
+            });
+          }
+        } else {
+          this.setState({
+            message: 'try again'
+          });
+        }
+      });
   }
 
   onChange(e){
@@ -23,6 +50,8 @@ class NativeCredentialsLogin extends Component{
   }
 
   render(){
+    const {username, password, message} = this.state;
+    const disabled = this.state.submitting ? 'disabled': '';
     return (
       <div>
         <form>
@@ -31,7 +60,7 @@ class NativeCredentialsLogin extends Component{
               type="text"
               name="username"
               placeholder="username"
-              value={this.state.username}
+              value={username}
               onChange={(e) => this.onChange(e)}
             />
           </div>
@@ -40,7 +69,7 @@ class NativeCredentialsLogin extends Component{
               type="password"
               name="password"
               placeholder="password"
-              value={this.state.password} 
+              value={password}
               onChange={(e) => this.onChange(e)}
             />
           </div>
@@ -49,7 +78,11 @@ class NativeCredentialsLogin extends Component{
               type="submit" 
               value="Sign In" 
               onClick={(e) => this.onSubmit(e)}
+              disabled = {disabled}
             />
+          </div>
+          <div>
+            <span>{message}</span>
           </div>
         </form>
       </div>
