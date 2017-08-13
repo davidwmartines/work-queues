@@ -16,7 +16,7 @@ class SignOut extends Component {
 
   render(){
     return (
-      <a href="#" onClick={(e) => this.onClick(e)}>Sign Out</a>
+      <a href="#signout" onClick={(e) => this.onClick(e)}>Sign Out</a>
     );
   }
 }

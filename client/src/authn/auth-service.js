@@ -1,48 +1,43 @@
+import {
+  post,
+  del
+} from '../http';
+
 class AuthService {
 
-  getAuthenticationState(){
+  getAuthenticationState() {
     const tokenExists = window.sessionStorage.getItem('token');
     return {
       authenticated: tokenExists
     };
   }
 
-  signOut(){
-    return fetch('/api/tokens', {
-      method: 'DELETE',
-      headers: {
-        'Authorization': `Bearer ${window.sessionStorage.getItem('token')}`
-      }
-    }).then(()=> {
-      window.sessionStorage.clear();
-    });
+  signOut() {
+    return del('api/tokens')
+      .then(() => {
+        window.sessionStorage.clear();
+      });
   }
 
   loginNative(username, password) {
-    return fetch('/api/tokens', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        username: username,
-        password: password
-      })
-    }).then((res) => {
-      if (res.ok) {
-        return res.json().then((result) => {
-          console.log('logged in', result.user.name);
-          window.sessionStorage.setItem('token', result.token);
+    return post('api/tokens', {
+      username,
+      password
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json().then((result) => {
+            console.log('logged in', result.user.name);
+            window.sessionStorage.setItem('token', result.token);
 
-          //open websocket here...
-          
-          return true;
-        });
-      } else {
-        return false;
-      }
-    });
+            //open websocket here...
+
+            return true;
+          });
+        } else {
+          return false;
+        }
+      });
   }
 }
 
