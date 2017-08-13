@@ -3,23 +3,20 @@ global.Promise = require('bluebird');
 const express = require('express');
 const websockets = require('./lib/websockets');
 const http = require('http');
+const config = require('./config/environment');
 
+// initialize express and the server
 const app = express();
-app.set('port', (process.env.PORT || 3001));
 const server = http.createServer(app);
+app.set('port', (process.env.PORT || config.port));
 
-registerRoutes(app);
+// configure
+require('./config/express')(app);
+require('./lib/routes')(app);
 registerSocketWorkers();
-startServer(server);
 
-//TODO: move route registration to separate file
-function registerRoutes(app) {
-  app.get('/api/status', (req, res) => {
-    res.json({
-      status: 'online'
-    });
-  });
-}
+// start
+startServer(server);
 
 //TODO: move socket worker registration to separate file
 function registerSocketWorkers() {
