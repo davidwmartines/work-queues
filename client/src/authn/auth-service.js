@@ -1,5 +1,23 @@
 class AuthService {
 
+  getAuthenticationState(){
+    const tokenExists = window.sessionStorage.getItem('token');
+    return {
+      authenticated: tokenExists
+    };
+  }
+
+  signOut(){
+    return fetch('/api/tokens', {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${window.sessionStorage.getItem('token')}`
+      }
+    }).then(()=> {
+      window.sessionStorage.clear();
+    });
+  }
+
   loginNative(username, password) {
     return fetch('/api/tokens', {
       method: 'POST',

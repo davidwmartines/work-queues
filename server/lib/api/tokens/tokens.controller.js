@@ -18,12 +18,21 @@ const demoUsers = [{
   name: 'User Three'
 }];
 
-module.exports.create = function (req, res) {
+module.exports.create = (req, res) => {
   return getUser(req)
     .then(makeResult)
     .then(respondWithResult(res))
     .catch(handleError(res));
 };
+
+module.exports.destroy = (req, res) => {
+  if (req.token && req.token.user) {
+    const user = req.token.user;
+    console.log(`${user.username} logging out...`);
+  }
+  res.status(204).send();
+};
+
 
 function getUser(req) {
   return Promise.resolve(demoUsers.find(u => u.username === req.body.username));

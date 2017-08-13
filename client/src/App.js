@@ -1,6 +1,7 @@
 import React, { Component }  from 'react';
 import './App.css';
-import NativeCredentialsLogin from './authn/NativeCredentialsLogin';
+import AuthContainer from './authn/AuthContainer';
+import UserInfo from './authn/UserInfo';
 
 class App extends Component {
 
@@ -22,24 +23,17 @@ class App extends Component {
   render() {
     console.log('app rendering', this.state);
 
-    let content = '';
-
-    if(!this.state.authenticated){
-      content = (
-        <NativeCredentialsLogin
-          onAuthenticationChanged={(event) => this.onAuthenticationChanged(event)}
-        />
-      );
-    } else {
-      content = '';
-    }
-
     return (
       <div className="App">
         <div className="App-header">
           <h2>Work Queues</h2>
         </div>
-        {content}
+        <UserInfo
+          onAuthenticationChanged={(event) => this.onAuthenticationChanged(event)}
+        />
+        <AuthContainer
+          onAuthenticationChanged={(event) => this.onAuthenticationChanged(event)}
+        />
       </div>
     );
   }
