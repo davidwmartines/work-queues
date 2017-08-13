@@ -34,7 +34,7 @@ class WebSocketClient {
             return;
           }
 
-          const socketUri = 'ws://' + window.location.host + '/socket?key=' + key;
+          const socketUri = `ws://${ window.location.host}/socket?key=${key}`;
 
           console.log('opening websocket');
 
