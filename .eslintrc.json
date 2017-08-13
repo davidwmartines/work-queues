@@ -33,7 +33,10 @@
       "error",
       "always"
     ],
-    "no-console":"warn",
-    "react/jsx-uses-vars": ["error"]
+    "no-console":"off",
+    "no-unused-vars": "error",
+    "react/jsx-uses-vars": ["error"],
+    "react/jsx-uses-react": ["error"],
+    "react/react-in-jsx-scope": ["error"]
   }
 }

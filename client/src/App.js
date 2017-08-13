@@ -1,5 +1,6 @@
-import { Component } from 'react';
+import React, { Component }  from 'react';
 import './App.css';
+import NativeCredentialsLogin from './authn/NativeCredentialsLogin';
 
 class App extends Component {
   render() {
@@ -8,6 +9,7 @@ class App extends Component {
         <div className="App-header">
           <h2>Work Queues</h2>
         </div>
+        <NativeCredentialsLogin/>
       </div>
     );
   }
