@@ -33,6 +33,7 @@
       "error",
       "always"
     ],
-    "no-console":"warn"
+    "no-console":"warn",
+    "react/jsx-uses-vars": ["error"]
   }
 }
