@@ -36,8 +36,6 @@ class AuthService {
             console.log('logged in', result.user.name);
             window.sessionStorage.setItem('token', result.token);
             window.sessionStorage.setItem('user', JSON.stringify(result.user));
-            //open websocket here...
-
             return true;
           });
         } else {

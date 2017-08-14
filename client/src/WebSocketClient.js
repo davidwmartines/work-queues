@@ -24,6 +24,7 @@ class WebSocketClient {
 
     http.get('/api/socket-keys')
       .then((response) => {
+        
         if (!response.ok) {
           return;
         }
@@ -57,7 +58,7 @@ class WebSocketClient {
             clearInterval(this.reconnectIntervalId);
           };
 
-          this.socket.onclose = function (event) {
+          this.socket.onclose = (event) => {
             console.log('websocket closed', event.code);
             this.socket = null;
             if (this.enableReconnect) {
