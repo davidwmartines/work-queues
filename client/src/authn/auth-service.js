@@ -1,30 +1,47 @@
+import {
+  post,
+  del
+} from '../http';
+
 class AuthService {
 
-  loginNative(username, password) {
-    return fetch('/api/tokens', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        username: username,
-        password: password
-      })
-    }).then((res) => {
-      if (res.ok) {
-        return res.json().then((result) => {
-          console.log('logged in', result.user.name);
-          window.sessionStorage.setItem('token', result.token);
+  getAuthenticationState() {
+    const tokenExists = window.sessionStorage.getItem('token');
+    return {
+      authenticated: tokenExists
+    };
+  }
 
-          //open websocket here...
-          
-          return true;
-        });
-      } else {
-        return false;
-      }
-    });
+  getUser(){
+    if (window.sessionStorage.getItem('user')){
+      return JSON.parse(window.sessionStorage.getItem('user'));
+    }
+  }
+
+  signOut() {
+    return del('api/tokens')
+      .then(() => {
+        window.sessionStorage.clear();
+      });
+  }
+
+  loginNative(username, password) {
+    return post('api/tokens', {
+      username,
+      password
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json().then((result) => {
+            console.log('logged in', result.user.name);
+            window.sessionStorage.setItem('token', result.token);
+            window.sessionStorage.setItem('user', JSON.stringify(result.user));
+            return true;
+          });
+        } else {
+          return false;
+        }
+      });
   }
 }
 

@@ -9,6 +9,25 @@ const keyExpireSeconds = 10;
 const forceReconnectMs = 300000;
 const socketWorkers = [];
 
+/**
+ * Starts a WebSocketServer.
+ * 
+ * When a new connection is opened by a client the following occurs:
+ *  1. Get the 'key' from the connection url querystring.  The key should be a
+ *      valid one-time key, previously acquired via the issueKey function.
+ *  2. Retrieve the associated user object using the key and establish a 'context' object.
+ *      The context object contains a reference to the current user and the open socket instance,
+ *      which is used by worker functions to send messages to a specific socket (i.e. user).
+ *  3. Start up all worker functions that were previoulsy registered via registerSocketWorker during app configuration.
+ *      An executing socket worker function should use the context to send outbound messages as needed.
+ *      It is expected that a socket worker will subscribe to receive events from some external system (e.g. mesage queue)
+ *      which are relevant to the associated user.
+ *  4. Start a force-reconnect timer, which will disconnect the client after a set interval
+ *      and require the client to reconnect.
+ * 
+ * Socket workers should listen for the 'close' event of the socket of their context, so they can
+ * terminate as needed.
+ */
 module.exports.start = function (connectServer) {
 
   const server = new WebSocketServer({
@@ -29,7 +48,7 @@ module.exports.start = function (connectServer) {
         return;
       }
 
-      console.log('connected user id', token.user);
+      console.log('connected user', token.user);
 
       const socketContext = {
         socket: socket,
@@ -88,17 +107,6 @@ module.exports.issueKey = function (authToken) {
 };
 
 function getValidTokenFromKey(key) {
-
-  //for testing
-  if (!key) {
-    return Promise.resolve({
-      user: {
-        id: 0,
-        name: 'test'
-      }
-    });
-  }
-
   const storageKey = keyspace + key;
   return redisClient.getAsync(storageKey).then(res => {
     if (res) {

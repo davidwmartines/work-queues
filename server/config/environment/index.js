@@ -6,6 +6,7 @@ module.exports = {
   port: 3001,
   jwt: {
     secret: '128juqwf48fq894nue4ia',
+    userProperty: 'token',
     expiresIn: '30m'
   }
 };

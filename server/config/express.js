@@ -5,20 +5,22 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const config = require('../config/environment');
 const jwt = require('express-jwt');
-module.exports = function(app) {
+module.exports = function (app) {
 
   app.set('clientPath', path.join(config.root, 'client'));
 
   //not yet...
   //app.use(express.static(app.get('clientPath')));
-  
+
   //app.use(morgan('dev'));
 
   app.use('/api/*', jwt({
     secret: config.jwt.secret,
-    userProperty: 'token'
+    userProperty: config.jwt.userProperty
   }).unless({
-    path: ['/api/tokens']
+    path: ['/api/tokens', {
+      method: 'POST'
+    }]
   }));
 
   app.use(bodyParser.urlencoded({

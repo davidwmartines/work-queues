@@ -1,45 +1,61 @@
 import React, { Component }  from 'react';
 import './App.css';
-import NativeCredentialsLogin from './authn/NativeCredentialsLogin';
+import AuthContainer from './authn/AuthContainer';
+import AuthService from './authn/auth-service';
+import UserInfoContainer from './authn/UserInfoContainer';
+import WebSocketClient from './WebSocketClient';
 
 class App extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {};
+    this.webSocketClient = new WebSocketClient({
+      onReceive: this.onReceive
+    });
   }
 
-  componentDidMount(){
-    if(window.sessionStorage.getItem('token')){
-      this.setState({authenticated: true});
+  onReceive(e, data){
+    console.log(`App received event: ${e}`, data);
+  }
+
+  componentDidMount() {
+    const authState = AuthService.getAuthenticationState();
+    if (authState.authenticated) {
+      if (!this.state.authenticated) {
+        this.setState({
+          authenticated: true
+        });
+      }
+      this.webSocketClient.ensure();
     }
   }
 
-  onAuthenticationChanged(e){
-    this.setState({authenticated: e.authenticated});
+  onAuthenticationChanged(e) {
+    this.setState({
+      authenticated: e.authenticated
+    });
+    if (e.authenticated) {
+      this.webSocketClient.open();
+    } else {
+      this.webSocketClient.close();
+    }
   }
 
   render() {
     console.log('app rendering', this.state);
-
-    let content = '';
-
-    if(!this.state.authenticated){
-      content = (
-        <NativeCredentialsLogin
-          onAuthenticationChanged={(event) => this.onAuthenticationChanged(event)}
-        />
-      );
-    } else {
-      content = '';
-    }
 
     return (
       <div className="App">
         <div className="App-header">
           <h2>Work Queues</h2>
         </div>
-        {content}
+        <UserInfoContainer
+          onAuthenticationChanged={(event) => this.onAuthenticationChanged(event)}
+        />
+        <AuthContainer
+          onAuthenticationChanged={(event) => this.onAuthenticationChanged(event)}
+        />
       </div>
     );
   }
