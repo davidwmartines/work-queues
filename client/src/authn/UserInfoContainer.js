@@ -32,4 +32,7 @@ class UserInfoContainer extends Component {
   }
 }
 
+//TODO: remove when we migrate to using connect.
+UserInfoContainer.contextTypes = { store: React.PropTypes.object };
+
 export default UserInfoContainer;

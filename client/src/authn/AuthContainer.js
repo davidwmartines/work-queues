@@ -28,4 +28,7 @@ class AuthContainer extends Component {
   }
 }
 
+//TODO: remove when we migrate to using connect.
+AuthContainer.contextTypes = { store: React.PropTypes.object };
+
 export default AuthContainer;

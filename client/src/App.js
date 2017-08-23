@@ -45,6 +45,9 @@ class App extends Component {
   render() {
     console.log('app rendering', this.state);
 
+
+    // const {store} = this.context;
+    // console.log('state', store.getState());
     return (
       <div className="App">
         <div className="App-header">
@@ -60,5 +63,8 @@ class App extends Component {
     );
   }
 }
+
+//TODO: remove when we migrate to using connect.
+App.contextTypes = { store: React.PropTypes.object };
 
 export default App;

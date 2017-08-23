@@ -25,7 +25,8 @@ class AuthService {
       });
   }
 
-  loginNative(username, password) {
+  loginNative(credentials) {
+    const {username,password} = credentials; 
     return post('api/tokens', {
       username,
       password
