@@ -2,7 +2,7 @@
 
 module.exports = (websockets, bus) => {
 
-  registerHeartbeatTest();
+  //registerHeartbeatTest();
   registerWorkItemCreatedNotification();
 
   function registerHeartbeatTest() {
