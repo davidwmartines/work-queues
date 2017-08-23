@@ -8,5 +8,11 @@ module.exports = {
     secret: '128juqwf48fq894nue4ia',
     userProperty: 'token',
     expiresIn: '30m'
+  },
+  bus: {
+    host: '192.168.56.1',
+    vhost: 'work-queues',
+    username: 'david',
+    password: 'david'
   }
 };

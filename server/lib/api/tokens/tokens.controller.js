@@ -18,6 +18,9 @@ const demoUsers = [{
   name: 'User Three'
 }];
 
+/**
+ * Handles POST requests to authenticate and return a new token
+ */
 module.exports.create = (req, res) => {
   return getUser(req)
     .then(makeResult)
@@ -25,7 +28,10 @@ module.exports.create = (req, res) => {
     .catch(handleError(res));
 };
 
-module.exports.destroy = (req, res) => {
+/**
+ * Handles DELETE requests to logout and invalidate the token.
+ */
+module.exports.remove = (req, res) => {
   if (req.token && req.token.user) {
     const user = req.token.user;
     console.log(`${user.username} logging out...`);

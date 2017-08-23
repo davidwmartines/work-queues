@@ -18,7 +18,7 @@ router.post('/', pause(latencyMs), controller.create);
 router.delete('/', jwt({
   secret: config.jwt.secret,
   userProperty: config.jwt.userProperty
-}), controller.destroy);
+}), controller.remove);
 
 
 module.exports = router;

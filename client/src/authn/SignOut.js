@@ -1,17 +1,12 @@
 import React, {Component} from 'react';
-import AuthService from './auth-service';
+import {connect} from 'react-redux';
+import * as actions from './actions';
 
 class SignOut extends Component {
 
   onClick(e) {
     e.preventDefault();
-    AuthService.signOut().then(() => {
-      if (this.props.onAuthenticationChanged) {
-        this.props.onAuthenticationChanged({
-          authenticated: false
-        });
-      }
-    });
+    this.props.dispatch(actions.logout());
   }
 
   render(){
@@ -21,4 +16,4 @@ class SignOut extends Component {
   }
 }
 
-export default SignOut;
+export default connect()(SignOut);

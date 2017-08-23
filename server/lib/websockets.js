@@ -71,6 +71,10 @@ module.exports.start = function (connectServer) {
           clearTimeout(reconnectTimeout);
         }
       });
+
+      socket.on('error', err => {
+        console.log('socket error', err);
+      });
     });
   });
 
