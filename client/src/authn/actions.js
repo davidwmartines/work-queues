@@ -57,11 +57,10 @@ export const login = (credentials) => {
           .then((val) => {
             console.log('logged in', val.user.name);
 
-            //store these in session to handle page reloads ?
-            // actually, really should persists entire state store
+            // sort of a hack to be able to get to the token from our non-components.
+            // will figure out how to get from store.getState() later.
             window.sessionStorage.setItem('token', val.token);
-            window.sessionStorage.setItem('user', JSON.stringify(val.user));
-
+            
             dispatch(loggedIn(val.user, val.token));
           });
       } else {
@@ -74,12 +73,12 @@ export const login = (credentials) => {
 };
 
 export const logout = () => {
+  window.sessionStorage.clear();
   return function (dispatch) {
     dispatch(loggingOut());
     return del('api/tokens')
       .then(() => {
         console.log('logged out');
-        window.sessionStorage.clear();
         dispatch(loggedOut());
       });
   };
