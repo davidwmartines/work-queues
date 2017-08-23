@@ -1,67 +1,30 @@
 import React, {Component} from 'react';
-import AuthService from './auth-service';
+import {connect} from 'react-redux';
+import * as actions from './actions';
 
 class NativeCredentialsLogin extends Component{
 
-  constructor(props){
-    super(props);
-    this.state = {
-      submitting: false,
-      message: '',
-      username:'',
-      password:''
-    };
-  }
-
-  onSubmit(e) {
-    e.preventDefault();
-    this.setState({
-      submitting: true,
-      message: ''
-    });
-    AuthService.loginNative(this.state.username, this.state.password)
-      .then((result) => {
-        this.setState({
-          submitting: false
-        });
-        if (result) {
-          this.setState({
-            username: '',
-            password: '',
-            message: ''
-          });
-          if (this.props.onAuthenticationChanged) {
-            this.props.onAuthenticationChanged({
-              authenticated: true
-            });
-          }
-        } else {
-          this.setState({
-            message: 'try again'
-          });
-        }
-      });
-  }
-
-  onChange(e){
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  }
-
   render(){
-    const {username, password, message} = this.state;
-    const disabled = this.state.submitting ? 'disabled': '';
+    console.log('rendering ncl', this.props);
+    const disabled = this.props.submitting ? 'disabled': '';
+    let username, password;
     return (
       <div>
-        <form>
+        <form onSubmit={e => {
+          e.preventDefault();
+          const credentials = {
+            username: username.value,
+            password: password.value
+          };
+          this.props.dispatch(actions.login(credentials));
+        }}>
           <div>
             <input 
               type="text"
               name="username"
               placeholder="username"
               value={username}
-              onChange={(e) => this.onChange(e)}
+              ref = {node => username = node}
             />
           </div>
           <div>
@@ -70,25 +33,31 @@ class NativeCredentialsLogin extends Component{
               name="password"
               placeholder="password"
               value={password}
-              onChange={(e) => this.onChange(e)}
+              ref = {node => password = node}
             />
           </div>
           <div>
             <input 
               type="submit" 
               value="Sign In" 
-              onClick={(e) => this.onSubmit(e)}
               disabled = {disabled}
             />
           </div>
           <div>
-            <span>{message}</span>
+            <span>{this.props.message}</span>
           </div>
         </form>
       </div>
     );
   }
-
 }
 
-export default NativeCredentialsLogin;
+function mapStateToProps(state){
+  console.log('mapStateToProps', state);
+  return {
+    message: state.app.message,
+    submitting: state.app.submitting
+  };
+}
+
+export default connect(mapStateToProps)(NativeCredentialsLogin);

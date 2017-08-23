@@ -4,6 +4,7 @@ import AuthContainer from './authn/AuthContainer';
 import AuthService from './authn/auth-service';
 import UserInfoContainer from './authn/UserInfoContainer';
 import WebSocketClient from './WebSocketClient';
+import {connect} from 'react-redux';
 
 class App extends Component {
 
@@ -64,7 +65,7 @@ class App extends Component {
   }
 }
 
-//TODO: remove when we migrate to using connect.
-App.contextTypes = { store: React.PropTypes.object };
+// //TODO: remove when we migrate to using connect.
+// App.contextTypes = { store: React.PropTypes.object };
 
-export default App;
+export default connect()(App);

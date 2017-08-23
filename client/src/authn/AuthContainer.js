@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import AuthService from './auth-service';
 import NativeCredentialsLogin from './NativeCredentialsLogin';
+import {connect} from 'react-redux';
 
 class AuthContainer extends Component {
 
@@ -20,15 +21,13 @@ class AuthContainer extends Component {
       return null;
     }
     return (
-      <NativeCredentialsLogin
-        onAuthenticationChanged={(event) => this.onAuthenticationChanged(event)}
-      />
+      <NativeCredentialsLogin />
       // Potentially also show third part auth service login components here.
     );
   }
 }
 
-//TODO: remove when we migrate to using connect.
-AuthContainer.contextTypes = { store: React.PropTypes.object };
+// //TODO: remove when we migrate to using connect.
+// AuthContainer.contextTypes = { store: React.PropTypes.object };
 
-export default AuthContainer;
+export default connect()(AuthContainer);

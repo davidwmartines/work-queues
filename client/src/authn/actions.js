@@ -65,7 +65,7 @@ export const login = (credentials) => {
             dispatch(loggedIn(val.user, val.token));
           });
       } else {
-        dispatch(loginError('error'));
+        dispatch(loginError('Invalid credentials.  Please try again.'));
       }
     }, (err) => {
       dispatch(loginError(err));
