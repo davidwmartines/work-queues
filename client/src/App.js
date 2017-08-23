@@ -29,12 +29,8 @@ class App extends Component {
         <div className="App-header">
           <h2>Work Queues</h2>
         </div>
-        <UserInfoContainer
-          onAuthenticationChanged={(event) => this.onAuthenticationChanged(event)}
-        />
-        <AuthContainer
-          onAuthenticationChanged={(event) => this.onAuthenticationChanged(event)}
-        />
+        <UserInfoContainer/>
+        <AuthContainer/>
       </div>
     );
   }
