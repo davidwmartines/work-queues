@@ -13,21 +13,31 @@ const app = (state = {
   message: null
 }, action) => {
 
-  switch(action.type){
+  switch (action.type) {
     case appActions.SUBMIT_START:
-      return {...state, submitting: true};
+      return { ...state,
+        submitting: true
+      };
     case appActions.SUBMIT_END:
-      return {...state, submitting: false};
+      return { ...state,
+        submitting: false
+      };
 
     case authnActions.LOGGING_IN:
     case authnActions.LOGGING_OUT:
-      return {...state, submitting: true, message: null};
-    
+      return { ...state,
+        submitting: true,
+        message: null
+      };
+
     case authnActions.LOGGED_IN:
     case authnActions.LOGGED_OUT:
     case authnActions.LOGIN_ERROR:
-      return {...state, submitting: false, message: action.message};
-    
+      return { ...state,
+        submitting: false,
+        message: action.message
+      };
+
     default:
       return state;
   }

@@ -5,6 +5,6 @@ export const submitStart = () => ({
   type: SUBMIT_START
 });
 
-export const submitEND = () => ({
+export const submitEnd = () => ({
   type: SUBMIT_END
 });

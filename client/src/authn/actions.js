@@ -78,9 +78,9 @@ export const logout = () => {
     dispatch(loggingOut());
     return del('api/tokens')
       .then(() => {
+        console.log('logged out');
         window.sessionStorage.clear();
         dispatch(loggedOut());
       });
-
   };
 };

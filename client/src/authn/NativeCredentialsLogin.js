@@ -5,7 +5,6 @@ import * as actions from './actions';
 class NativeCredentialsLogin extends Component{
 
   render(){
-    console.log('rendering ncl', this.props);
     const disabled = this.props.submitting ? 'disabled': '';
     let username, password;
     return (
@@ -52,12 +51,11 @@ class NativeCredentialsLogin extends Component{
   }
 }
 
-function mapStateToProps(state){
-  console.log('mapStateToProps', state);
+const mapStateToProps = (state) => {
   return {
     message: state.app.message,
     submitting: state.app.submitting
   };
-}
+};
 
 export default connect(mapStateToProps)(NativeCredentialsLogin);

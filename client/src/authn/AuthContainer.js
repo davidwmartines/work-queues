@@ -1,23 +1,11 @@
 import React, {Component} from 'react';
-import AuthService from './auth-service';
 import NativeCredentialsLogin from './NativeCredentialsLogin';
 import {connect} from 'react-redux';
 
 class AuthContainer extends Component {
 
-  shouldRender(){
-    const state = AuthService.getAuthenticationState();
-    return !state.authenticated;
-  }
-
-  onAuthenticationChanged(e){
-    if (this.props.onAuthenticationChanged) {
-      this.props.onAuthenticationChanged(e);
-    }
-  }
-
   render(){
-    if(!this.shouldRender()){
+    if (!this.props.visible) {
       return null;
     }
     return (
@@ -27,7 +15,10 @@ class AuthContainer extends Component {
   }
 }
 
-// //TODO: remove when we migrate to using connect.
-// AuthContainer.contextTypes = { store: React.PropTypes.object };
+const mapStateToProps = (state) => {
+  return {
+    visible: !state.authn.token
+  };
+};
 
-export default connect()(AuthContainer);
+export default connect(mapStateToProps)(AuthContainer);

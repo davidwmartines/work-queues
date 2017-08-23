@@ -1,38 +1,28 @@
 import React, {Component} from 'react';
-import AuthService from './auth-service';
 import SignOut from './SignOut';
 import UserInfo from './UserInfo';
+import {connect} from 'react-redux';
 
 class UserInfoContainer extends Component {
-
-  shouldRender(){
-    const state = AuthService.getAuthenticationState();
-    return state.authenticated;
-  }
-
-  onAuthenticationChanged(e){
-    if (this.props.onAuthenticationChanged) {
-      this.props.onAuthenticationChanged(e);
-    }
-  }
-
+  
   render(){
-    if(!this.shouldRender()){
+    if(!this.props.visible){
       return null;
     }
-    const user = AuthService.getUser();
     return (
       <div>
-        <UserInfo user={user} />
-        <SignOut
-          onAuthenticationChanged={(event) => this.onAuthenticationChanged(event)}
-        />
+        <UserInfo user={this.props.user} />
+        <SignOut/>
       </div>
     );
   }
 }
 
-//TODO: remove when we migrate to using connect.
-UserInfoContainer.contextTypes = { store: React.PropTypes.object };
+const mapStateToProps = (state) => {
+  return {
+    visible: !!state.authn.token,
+    user: state.authn.user
+  };
+};
 
-export default UserInfoContainer;
+export default connect(mapStateToProps)(UserInfoContainer);
