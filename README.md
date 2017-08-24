@@ -1,5 +1,5 @@
 # Work Queues
-Demontrates a full-stack JavaScript application.  
+Demonstrates a full-stack JavaScript application.  
 
 **Frameworks / technologies used:**
 * UI 
