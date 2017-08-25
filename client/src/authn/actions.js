@@ -73,11 +73,11 @@ export const login = (credentials) => {
 };
 
 export const logout = () => {
-  window.sessionStorage.clear();
   return function (dispatch) {
     dispatch(loggingOut());
     return del('api/tokens')
       .then(() => {
+        window.sessionStorage.clear();
         console.log('logged out');
         dispatch(loggedOut());
       });

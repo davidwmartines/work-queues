@@ -3,7 +3,7 @@ const respondWithResult = require('../../respond-with-result');
 const handleError = require('../../handle-error');
 const websockets = require('../../websockets');
 
-module.exports.index = function(req, res) {
+module.exports.create = function(req, res) {
   var token = req.token;
   if (token) {
     return websockets.issueKey(token)

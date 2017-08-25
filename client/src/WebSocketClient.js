@@ -22,7 +22,7 @@ class WebSocketClient {
     //start out closed
     this.close();
 
-    http.get('/api/socket-keys')
+    http.post('/api/socket-keys')
       .then((response) => {
         
         if (!response.ok) {
